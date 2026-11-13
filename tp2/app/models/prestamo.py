@@ -1,5 +1,8 @@
 from datetime import date
-from sqlmodel import SQLModel, Field
+from sqlmodel import Relationship, SQLModel, Field
+
+from tp2.app.models.libro import Libro
+from tp2.app.models.socio import Socio
 
 # 1. Atributos base compartidos
 class PrestamoBase(SQLModel):
@@ -29,3 +32,7 @@ class Prestamo(PrestamoBase, table=True):
     # Claves foráneas que apuntan a las otras tablas
     socio_id: int = Field(foreign_key="socios.id")
     libro_id: int = Field(foreign_key="libros.id")
+    
+    # Relaciones inversas N-1
+    socio: Socio = Relationship(back_populates="prestamos")
+    libro: Libro = Relationship(back_populates="prestamos")

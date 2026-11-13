@@ -1,4 +1,6 @@
-from sqlmodel import SQLModel, Field
+from sqlmodel import Relationship, SQLModel, Field
+
+from tp2.app.models.prestamo import Prestamo
 
 # 1. Atributos base compartidos
 class SocioBase(SQLModel):
@@ -21,3 +23,6 @@ class Socio(SocioBase, table=True):
     __tablename__ = "socios"
     
     id: int | None = Field(default=None, primary_key=True)
+    
+    # Relación 1-N con Préstamos (Un socio puede tener varios préstamos)
+    prestamos: list[Prestamo] = Relationship(back_populates="socio")
