@@ -1,8 +1,8 @@
 from sqlmodel import Relationship, SQLModel, Field
 
-from tp2.app.models.autor import Autor
-from tp2.app.models.libro_autor import LibroAutorLink
-from tp2.app.models.prestamo import Prestamo
+#from app.models.autor import Autor
+from app.models.libro_autor import LibroAutorLink
+#from app.models.prestamo import Prestamo
 
 # 1. Atributos base compartidos
 class LibroBase(SQLModel):
@@ -29,7 +29,7 @@ class Libro(LibroBase, table=True):
     id: int | None = Field(default=None, primary_key=True)
     
     # Relación N-N con Autores
-    autores: list[Autor] = Relationship(back_populates="libros", link_model=LibroAutorLink)
+    autores: list["Autor"] = Relationship(back_populates="libros", link_model=LibroAutorLink)
     
     # Relación 1-N con Préstamos (Un libro puede estar en muchos préstamos)
-    prestamos: list[Prestamo] = Relationship(back_populates="libro")
+    prestamos: list["Prestamo"] = Relationship(back_populates="libro")

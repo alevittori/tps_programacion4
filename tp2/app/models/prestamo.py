@@ -1,8 +1,8 @@
 from datetime import date
 from sqlmodel import Relationship, SQLModel, Field
 
-from tp2.app.models.libro import Libro
-from tp2.app.models.socio import Socio
+from app.models.libro import Libro
+from app.models.socio import Socio
 
 # 1. Atributos base compartidos
 class PrestamoBase(SQLModel):
