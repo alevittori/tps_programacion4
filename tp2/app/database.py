@@ -1,4 +1,6 @@
 from sqlmodel import SQLModel, create_engine, Session
+from fastapi import Depends
+from typing import Annotated
 
 # Nombre del archivo de base de datos SQLite local
 sqlite_file_name = "db_biblioteca.db"
@@ -24,3 +26,6 @@ def get_session():
     """Dependencia de FastAPI que abre una sesión de base de datos por cada request y la cierra al terminar."""
     with Session(engine) as session:
         yield session
+        
+# Dependencia de sesión de base de datos
+SessionDep = Annotated[Session, Depends(get_session)]

@@ -1,13 +1,11 @@
 from fastapi import FastAPI
 from app.database import create_db_and_tables
+from app.routers import autor_router
 
 # Inicializamos la aplicación FastAPI
-app = FastAPI(
-    title="Sistema de Biblioteca API",
-    version="1.0.0",
-    description="API REST para gestionar el catálogo de una biblioteca y sus préstamos (FastAPI + SQLModel)"
-)
+app = FastAPI()
 
+app.include_router(autor_router.router)
 # Evento que se ejecuta al arrancar la aplicación
 @app.on_event("startup")
 def on_startup():
