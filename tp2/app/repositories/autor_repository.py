@@ -1,7 +1,6 @@
 from typing import Annotated, Sequence
 from fastapi import Depends
 from sqlmodel import select
-#from app.dependencies import SessionDep
 from app.database import  SessionDep
 from app.models.autor import Autor, AutorCreate, AutorUpdate
 
@@ -25,11 +24,14 @@ class AutorRepository:
 
     def update(self, autor_db: Autor, autor_in: AutorUpdate) -> Autor:
         autor_data = autor_in.model_dump(exclude_unset=True)
+        
         for key, value in autor_data.items():
             setattr(autor_db, key, value)
+            
         self.session.add(autor_db)
         self.session.commit()
         self.session.refresh(autor_db)
+        
         return autor_db
 
     def delete(self, autor_db: Autor) -> None:
