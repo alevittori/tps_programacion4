@@ -2,6 +2,7 @@ from typing import Sequence
 from fastapi import APIRouter, HTTPException, status
 from app.dependencies import SocioServiceDep
 from app.models.socio import Socio, SocioCreate, SocioUpdate
+from app.models.prestamo import Prestamo
 
 router = APIRouter(prefix="/socios", tags=["Socios"])
 
@@ -55,3 +56,17 @@ def eliminar_socio(socio_id: int, service: SocioServiceDep):
             detail="Socio no encontrado"
         )
     return None
+
+@router.get("/{socio_id}/prestamos", response_model=Sequence[Prestamo])
+def listar_prestamos_de_socio(
+    socio_id: int,
+    prestamo_service: PrestamoServiceDep,
+    activos: bool | None = None
+) -> Sequence[Prestamo]:
+    try:
+        return prestamo_service.get_prestamos_por_socio(socio_id=socio_id, activos=activos)
+    except LookupError as e:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=str(e)
+        )

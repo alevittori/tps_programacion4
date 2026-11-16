@@ -61,5 +61,12 @@ class LibroRepository:
         self.session.refresh(libro_db)
         return libro_db
     
+    def remove_autor(self, libro_db: Libro, autor_db: Autor) -> Libro:
+        """Desasocia un autor de un libro en la relación N-N."""
+        libro_db.autores.remove(autor_db)
+        self.session.add(libro_db)
+        self.session.commit()
+        self.session.refresh(libro_db)
+        return libro_db
     
 LibroRepositoryDep = Annotated[LibroRepository, Depends(LibroRepository)]

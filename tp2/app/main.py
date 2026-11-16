@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from app.database import create_db_and_tables
-from app.routers import autor_router,libro_router,socio_router
+from app.routers import autor_router,libro_router,socio_router,prestamo_router
 
 
 # Inicializamos la aplicación FastAPI
@@ -9,6 +9,7 @@ app = FastAPI()
 app.include_router(autor_router.router)
 app.include_router(libro_router.router)
 app.include_router(socio_router.router)
+app.include_router(prestamo_router.router)
 
 
 @app.on_event("startup")
