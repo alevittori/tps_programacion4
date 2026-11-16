@@ -1,0 +1,78 @@
+Antes de comenzar un proyecto en python, siempre hay que crear un entorno virtual, ya que python trabaja mejor asi.
+
+1) Crear entorno virtual : 
+     python3 -m venv venv curso-platzi  //esto creo que crearia dos entornos en simultaneos 
+     python3 -m venv .venv
+
+
+2) Luego debemos activar ese entorno: source curso-platzi/bin/activate
+
+    linux/macOS: source .venv/bin/activate
+    cmd ((Símbolo del sistema / ) : .venv\Scripts\activate
+    powershell: .venv\Scripts\Activate.ps1
+
+   Git Bash : source .venv/Scripts/activate
+
+3) Instalamos fastAPI
+
+    pip install fastAPI[standard]
+
+4) para desactivar el entorno:
+    
+     deactivate
+
+5) Para ejecutar el servidor es:
+   
+     fastapi dev main.py 
+
+6) Para borrar un entorno 
+
+    rm -rf .venv
+
+7) Intalacion de la libreria SQLModel para manejo de base de datos
+
+    pip install sqlmodel 
+
+
+Crea el nuevo entorno con Python 3.14
+
+    Utiliza el Python Launcher (py) con el comando -3.14 para obligar al sistema a utilizar esa versión específica al momento de generar el nuevo entorno virtual:
+
+    py -3.14 -m venv .venv
+
+
+
+
+
+Tres detalles clave sobre este archivo:
+
+    1. El entorno virtual se queda fuera: Al ignorar .venv/, evitas subir miles de archivos innecesarios a GitHub. En su lugar, cuando otra persona (o tú desde otra PC) descargue el proyecto, solo tendrá que ejecutar pip install -r requirements.txt para reconstruirlo.
+    2. Protección de datos (.env): FastAPI suele usar archivos .env para almacenar credenciales de bases de datos. Este .gitignore evita que subas por accidente esos datos sensibles.
+    3. La excepción (!.env.example): Permite subir un archivo de ejemplo (vacío o con datos falsos) para que otros programadores sepan qué variables necesita tu API para funcionar.
+
+
+
+CREACION DEL ARCHIVO DE REQUERIMIENTOS PARA INSTALAR LAS DEPENDENCIAS 
+
+    Para crear el archivo de requerimientos (el nombre correcto en inglés es requirements.txt), necesitas usar un comando de pip que "congela" y lista todas las librerías con sus versiones exactas instaladas en tu entorno virtual activo.
+
+    Sigue estos pasos en tu terminal (asegurándote de que todavía se vea el (.venv) al principio):
+
+1. Comando para crear el archivo
+
+    Ejecuta el siguiente comando en tu consola de Git Bash:
+        pip freeze > requirements.txt
+
+    ¿Qué hace este comando?
+
+    • pip freeze: Le pide a Python que haga una lista de todas las librerías que has instalado hasta el momento en este entorno virtual (por ejemplo: fastapi, uvicorn, etc.).
+    • >: Es un operador de redirección. Le dice a la terminal: "En lugar de mostrarme la lista en la pantalla, guárdala dentro de un archivo".
+    • requirements.txt: Es el nombre estándar que se le da a este archivo en el ecosistema de Python.
+
+2. Cómo se usa en el futuro (Tu salvavidas)
+    La magia de este archivo es que cuando subas tu proyecto a GitHub, no subirás la carpeta .venv (gracias al .gitignore que creamos antes).
+    Si clonas tu proyecto en otra computadora o trabajas con un compañero, solo tendrán que crear un entorno virtual limpio y ejecutar este comando para instalar exactamente lo mismo que tú tenías:
+
+        pip install -r requirements.txt
+
+    Intenta ejecutar el comando pip freeze > requirements.txt. Si abres el archivo que se acaba de crear en VS Code, ¿qué librerías de FastAPI te aparecen listadas?
