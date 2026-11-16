@@ -48,3 +48,33 @@ def eliminar_libro(libro_id: int, service: LibroServiceDep):
             detail="Libro no encontrado"
         )
     return None
+
+@router.post("/{libro_id}/autores/{autor_id}", response_model=Libro, status_code=status.HTTP_200_OK)
+def asociar_autor_a_libro(libro_id: int, autor_id: int, service: LibroServiceDep) -> Libro:
+    try:
+        return service.asociar_autor(libro_id=libro_id, autor_id=autor_id)
+    except LookupError as e:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=str(e)
+        )
+    except ValueError as e:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=str(e)
+        )
+        
+@router.delete("/{libro_id}/autores/{autor_id}", response_model=Libro, status_code=status.HTTP_200_OK)
+def desasociar_autor_de_libro(libro_id: int, autor_id: int, service: LibroServiceDep) -> Libro:
+    try:
+        return service.desasociar_autor(libro_id=libro_id, autor_id=autor_id)
+    except LookupError as e:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=str(e)
+        )
+    except ValueError as e:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=str(e)
+        )
