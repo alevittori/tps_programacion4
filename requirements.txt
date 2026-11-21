@@ -6,6 +6,7 @@ certifi==2026.10.23
 charset-normalizer==3.5.2
 click==8.5.1
 colorama==0.4.6
+coverage==7.17.4
 detect-installer==0.2.1
 dnspython==2.9.2
 email-validator==2.3.0
@@ -21,6 +22,7 @@ httptools==0.9.0
 httpx==0.28.1
 httpx2==2.16.0
 idna==3.20
+iniconfig==2.3.1
 Jinja2==3.1.6
 markdown-it-py==4.3.0
 MarkupSafe==3.0.4
@@ -33,12 +35,16 @@ opentelemetry-exporter-otlp-proto-http==1.45.2
 opentelemetry-proto==1.45.2
 opentelemetry-sdk==1.45.2
 opentelemetry-semantic-conventions==0.66b2
+packaging==26.3
+pluggy==1.7.0
 protobuf==7.36.2
 pydantic==2.14.3
 pydantic-extra-types==2.11.1
 pydantic-settings==2.16.2
 pydantic_core==2.50.4
 Pygments==2.21.0
+pytest==9.2.0
+pytest-cov==7.1.0
 python-dotenv==1.2.4
 python-multipart==0.0.33
 PyYAML==6.0.3

@@ -1,6 +1,6 @@
 from typing import Sequence
 from fastapi import APIRouter, HTTPException, status
-from app.dependencies import SocioServiceDep
+from app.dependencies import PrestamoServiceDep, SocioServiceDep
 from app.models.socio import Socio, SocioCreate, SocioUpdate
 from app.models.prestamo import Prestamo
 
@@ -12,7 +12,7 @@ def crear_socio(socio_in: SocioCreate, service: SocioServiceDep) -> Socio:
         return service.create_socio(socio_in)
     except ValueError as e:
         raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
+            status_code=status.HTTP_409_CONFLICT,
             detail=str(e)
         )
 
@@ -36,7 +36,7 @@ def actualizar_socio(socio_id: int, socio_in: SocioUpdate, service: SocioService
         socio = service.update_socio(socio_id, socio_in)
     except ValueError as e:
         raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
+            status_code=status.HTTP_409_CONFLICT,
             detail=str(e)
         )
         

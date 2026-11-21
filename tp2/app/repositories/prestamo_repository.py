@@ -39,10 +39,9 @@ class PrestamoRepository:
         return self.session.exec(statement).all()
 
     def count_activos_by_socio(self, socio_id: int) -> int:
-        """Cuenta cuántos préstamos sin devolver tiene actualmente un socio."""
-        statement = select(func.count(Prestamo.id)).where(
+        statement = select(func.count()).select_from(Prestamo).where(
             Prestamo.socio_id == socio_id,
-            Prestamo.fecha_devolucion == None
+            Prestamo.fecha_devolucion.is_(None)
         )
         return self.session.exec(statement).one()
 

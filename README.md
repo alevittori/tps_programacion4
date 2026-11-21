@@ -1,5 +1,5 @@
 # tps_programacion4
-repo para los tp de programacion 4 utn
+repo para los tp de programacion 4 utn backend
 
 Trabajo Práctico: ABM de Usuarios con FastAPI + ABM propio
 Objetivo

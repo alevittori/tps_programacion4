@@ -18,10 +18,10 @@ class LibroRepository:
         return libro
 
  
+    
     def get_all(self, skip: int = 0, limit: int = 100, disponibles: bool | None = None) -> Sequence[Libro]:
         statement = select(Libro)
         
-        # Filtro opcional por disponibilidad de stock
         if disponibles is True:
             statement = statement.where(Libro.stock > 0)
         elif disponibles is False:
@@ -29,7 +29,6 @@ class LibroRepository:
             
         statement = statement.offset(skip).limit(limit)
         return self.session.exec(statement).all()
-    
     
     def get_by_id(self, libro_id: int) -> Libro | None:
         return self.session.get(Libro, libro_id)

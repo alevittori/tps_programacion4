@@ -11,9 +11,8 @@ class LibroServiceInterface(ABC):
         ...
 
     @abstractmethod
-    def get_libros(self, skip: int, limit: int) -> Sequence[Libro]:
+    def get_libros(self, skip: int = 0, limit: int = 100, disponibles: bool | None = None) -> Sequence[Libro]:
         ...
-
     @abstractmethod
     def get_libro_by_id(self, libro_id: int) -> Libro | None:
         ...
@@ -47,9 +46,9 @@ class LibroService(LibroServiceInterface):
             raise ValueError(f"Ya existe un libro registrado con el ISBN '{libro_in.isbn}'.")
         return self.repo.create(libro_in)
 
-    def get_libros(self, skip: int = 0, limit: int = 100) -> Sequence[Libro]:
-        return self.repo.get_all(skip, limit)
-
+   
+    def get_libros(self, skip: int = 0, limit: int = 100, disponibles: bool | None = None) -> Sequence[Libro]:
+        return self.repo.get_all(skip=skip, limit=limit, disponibles=disponibles)
     def get_libro_by_id(self, libro_id: int) -> Libro | None:
         return self.repo.get_by_id(libro_id)
 

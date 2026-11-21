@@ -5,24 +5,27 @@ from app.models.prestamo import Prestamo, PrestamoCreate,PrestamoUpdate
 
 router = APIRouter(prefix="/prestamos", tags=["Préstamos"])
 
+
 @router.post("/", response_model=Prestamo, status_code=status.HTTP_201_CREATED)
 def crear_prestamo(prestamo_in: PrestamoCreate, service: PrestamoServiceDep) -> Prestamo:
     try:
         return service.registrar_prestamo(prestamo_in)
     except LookupError as e:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=str(e))
+    except PermissionError as e:
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail=str(e))
     except ValueError as e:
-        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
+        raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail=str(e))
 
-@router.patch("/{prestamo_id}/devolver", response_model=Prestamo)
+@router.post("/{prestamo_id}/devolucion", response_model=Prestamo)
 def devolver_prestamo(prestamo_id: int, service: PrestamoServiceDep) -> Prestamo:
     try:
         return service.registrar_devolucion(prestamo_id)
     except LookupError as e:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=str(e))
     except ValueError as e:
-        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
-
+        raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail=str(e))
+    
 @router.get("/", response_model=Sequence[Prestamo])
 def listar_prestamos(
     service: PrestamoServiceDep,

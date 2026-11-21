@@ -11,13 +11,19 @@ def crear_libro(libro_in: LibroCreate, service: LibroServiceDep) -> Libro:
         return service.create_libro(libro_in)
     except ValueError as e:
         raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
+            status_code=status.HTTP_409_CONFLICT,
             detail=str(e)
         )
 
+
 @router.get("/", response_model=Sequence[Libro])
-def listar_libros(service: LibroServiceDep, skip: int = 0, limit: int = 100) -> Sequence[Libro]:
-    return service.get_libros(skip, limit)
+def listar_libros(
+    service: LibroServiceDep,
+    disponibles: bool | None = None,
+    skip: int = 0,
+    limit: int = 100
+) -> Sequence[Libro]:
+    return service.get_libros(skip=skip, limit=limit, disponibles=disponibles)
 
 @router.get("/{libro_id}", response_model=Libro)
 def obtener_libro(libro_id: int, service: LibroServiceDep) -> Libro:
@@ -60,7 +66,7 @@ def asociar_autor_a_libro(libro_id: int, autor_id: int, service: LibroServiceDep
         )
     except ValueError as e:
         raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
+            status_code=status.HTTP_409_CONFLICT,
             detail=str(e)
         )
         
@@ -75,6 +81,6 @@ def desasociar_autor_de_libro(libro_id: int, autor_id: int, service: LibroServic
         )
     except ValueError as e:
         raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
+            status_code=status.HTTP_409_CONFLICT,
             detail=str(e)
         )
